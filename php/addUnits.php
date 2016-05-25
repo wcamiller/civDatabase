@@ -11,56 +11,70 @@ if ($mysqli->connect_errno) {
 	echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
 
-$addUnitName1 = $_POST['addUnit1'];
-$addHP1 = $_POST['addHP1'];
-$addMelee1 = $_POST['addMelee1'];
-$addDefense1 = $_POST['addDefense1'];
-$addSight1 = $_POST['addSight1'];
-$addReplacesUnit1 = $_POST['addReplacesUnit1'];
-$addUnit1 = $_POST['addUnit1'];
-$addUnitName1 = $_POST['addUnit1'];
 
-$addunitName2 = $_POST['addUnit2'];
-$addHP2 = $_POST['addHP2'];
-$addMelee2 = $_POST['addMelee2'];
-$addDefense2 = $_POST['addDefense2'];
-$addSight2 = $_POST['addSight2'];
-$addReplacesUnit2 = $_POST['addReplacesUnit2'];
-$addUnit2 = $_POST['addUnit2'];
-$addUnitName2 = $_POST['addUnit2'];
+
+$civName = $_POST['dropDown1'];
+$cidId;
+
+$unit1 = $_POST['unit1'];
+$combatStrength1 = (empty($_POST['combatStrength1'])) ? 0 : $_POST['combatStrength1'];
+$rangedStrength1 = (empty($_POST['rangedStrength1'])) ? 0 : $_POST['rangedStrength1'];
+$movement1 = (empty($_POST['movement1'])) ? 0 : $_POST['movement1'];
+$replacesUnit1 = (empty($_POST['replacesUnit1'])) ? NULL : $_POST['replacesUnit1'];
+$descrip1 = (empty($_POST['descrip1'])) ? NULL : $_POST['descrip1'];
+
+$unit2 = $_POST['unit2'];
+$combatStrength2 = (empty($_POST['combatStrength2'])) ? 0 : $_POST['combatStrength2'];
+$rangedStrength2 = (empty($_POST['rangedStrength2'])) ? 0 : $_POST['rangedStrength2'];
+$movement2 = (empty($_POST['movement2'])) ? 0 : $_POST['movement2'];
+$replacesUnit2 = (empty($_POST['replacesUnit2'])) ? NULL : $_POST['replacesUnit2'];
+$descrip2 = (empty($_POST['descrip2'])) ? NULL : $_POST['descrip2'];
 
 $rows = array();
 $json_array = array();
 
-$unitAdded = "Unit(s) successfully added (" . $addUnitName1 . ", " .  $addUnitName2 . ).";
 
-$addCivQuery = "INSERT INTO civ_civs (name, leader) VALUES ($civName, $civLeader)";
-	if ($mysqli->query($addCivQuery)) {
-		array_push($json_array, '{"success":' . '"' . $civAdded  . '"}');
-	} else {
-		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
-		return;
-	} 
+
+$unitAdded1 = "Unit successfully added (" . $unit1 . ").";
+$unitAdded2 = "Unit successfully added (" . $unit2 . ").";
+
+$civIdQuery = "SELECT id FROM civ_civs WHERE civ_civs.name = '$civName'";
+
+
+
+if ($civIdResult = $mysqli->query($civIdQuery)) {
+	if ($civIdRow = $civIdResult->fetch_assoc()) {
+		$civId = $civIdRow["id"];
+	}
 } else {
-	array_push($json_array, '{"error":' . '"Insufficient input data (both civilization and leader names are required)."}');
+		//print $mysqli->error;
+		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
 }
 
-if ($uniqueAbility) {
-	$civIdQuery = "SELECT id FROM civ_civs WHERE civ_civs.name LIKE '%$civName%'";
-	if ($civIdResult = $mysqli->query($civIdQuery)) {
-		if ($civIdRow = $civIdResult->fetch_assoc()) {
-			$civId = $civIdRow["id"];
-		}
-	}
-	$insertAbilityQuery = "FFJI";
-	// $insertAbilityQuery = "INSERT INTO civ_unique_abilities (civ_id, descrip) VALUES ($civId, $uniqueAbility)";
-	if ($mysqli->query($insertAbilityQuery)) {
-		array_push($json_array, '{"success":' . '"' . $abilityAdded . '"}');
+$addUnit1Query = "INSERT INTO civ_unique_units (civ_id, name, combat_strength, ranged_strength, movement, descrip, replaces)
+								  VALUES ($civId, '$unit1', $combatStrength1, $rangedStrength1, $movement1, '$descrip1', '$replacesUnit1')";
+
+$addUnit2Query = "INSERT INTO civ_unique_units (civ_id, name, combat_strength, ranged_strength, movement, descrip, replaces)
+								  VALUES ($civId, '$unit2', $combatStrength2, $rangedStrength2, $movement2, '$descrip2', '$replacesUnit2')";
+
+if ($unit1) {
+	if ($mysqli->query($addUnit1Query)) {
+		array_push($json_array, '{"success":' . '"' . $unitAdded1 . '"}');
 	} else {
+		//print $mysqli->error;
 		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
 	}
 }
 
- print json_encode($json_array);
+if ($unit2) {
+	if ($mysqli->query($addUnit2Query)) {
+		array_push($json_array, '{"success":' . '"' . $unitAdded2 . '"}');
+	} else {
+		//print $mysqli->error;
+		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
+	}
+}
+
+print json_encode($json_array);
 
 ?>

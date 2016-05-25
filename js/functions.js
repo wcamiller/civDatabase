@@ -1,34 +1,23 @@
-
-
-// function populateSelect() {
-// 	debugger;
-// 	var dropDown = document.getElementById("dropDown");
-// 	dropDown.addEventListener("load", function() {
-// 		console.log("done");
-// 		var req = new XMLHttpRequest();
-// 		var queryURL = "query.php" + "?query="
-// 		req.open("GET", queryURL, true);
-// 		req.addEventListener("load", function() {
-// 			if (req.status >= 200 && req.status < 400) {
-// 				var data = JSON.parse(req.responseText);
-// 				while (dropDown.firstChild) {
-// 					dropDown.removeChild(queryInfoDiv.firstChild);
-// 				}
-
-// 				for (var key in data) {
-// 					if (data.hasOwnProperty(key) && key == "name") {
-// 						var option = document.createElement("option");
-// 						option.appendChild(document.createTextNode(data.key));
-// 						dropDown.appendChild(option);
-// 		  		}
-// 		  	}
-// 		  	} else {
-// 		  		console.log("Error in network request: " + req.statusText);
-// 		  	}	
-// 		});
-// 		event.preventDefault();
-// 	});
-// }
+function populateUnitFields() {
+  var populateURL = "php/populateUnits.php?dropDown1=" + $("#dropDown1 option:selected").text() + "&dropDown2=" + $("#dropDown2 option:selected").text();
+  	console.log(populateURL);
+  	$.get(populateURL, function(data) {
+  		data = JSON.parse(data);
+  		console.log(data[0]);
+			$("[name=unit1").val(data[0].name);
+			$("[name=combatStrength1").val(data[0].combat_strength);
+			$("[name=rangedStrength1").val(data[0].ranged_strength);
+			$("[name=movement1").val(data[0].movement);
+			$("[name=descrip1").val(data[0].descrip);
+			$("[name=replaces1").val(data[0].replaces);
+			$("[name=unit2").val(data[1].name);
+			$("[name=combatStrength2").val(data[1].combat_strength);
+			$("[name=rangedStrength2").val(data[1].ranged_strength);
+			$("[name=movement2").val(data[1].movement);
+			$("[name=descrip2").val(data[1].descrip);
+			$("[name=replaces2").val(data[1].replaces);
+  	});
+}
 
 function addCiv() {
 	

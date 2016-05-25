@@ -11,9 +11,9 @@ if ($mysqli->connect_errno) {
 	echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 }
 
-$civName = $_POST['addCivName'];
-$uniqueAbility = '"' . $_POST['addUniqueAbility'] . '"';
-$civLeader = $_POST['addLeader'];
+$civName = $_POST['civName'];
+$uniqueAbility = '"' . $_POST['uniqueAbility'] . '"';
+$civLeader = $_POST['leader'];
 
 $rows = array();
 $json_array = array();
