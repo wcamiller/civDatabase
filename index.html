@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8">
+ 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundation 5</title>
+ 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/normalize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css">
+<link href='http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<style>/*.civAttrib{opacity: 0.5; pointer-events: none;}*/</style>
+</head>
+<body>
+ 
+<div class="row">
+<div class="large-3 columns" style="padding-top:20px; left:15px;">
+<h6>Selected Civilization:</h6>
+</div>
+
+<div class="large-2 columns" style="top:15px;">
+<select id="dropDown"></select>
+</div>
+<div class="large-3 columns" style="padding-top:15px;">
+<form id="form">
+<input id="searchString" type="text" placeholder="Search Civilizations">
+</form>
+</div>
+<div class="large-3 columns">
+
+<ul class="inline-list right" style="padding-top:20px;">
+
+<li><a href="add-data.html">Add Civilization / Edit Tables</a></li>
+</ul>
+</div>
+</div>
+ 
+<div class="row">
+ 
+ 
+<div class="large-9 push-3 columns" style="padding-top:15px;">
+	<div id="displayPane">
+		<table id="queryInfo" width=950>	
+		</table>
+	</div>
+</div>
+ 
+ 
+<div class="large-3 pull-9 columns">
+<ul class="side-nav">
+<li><a href="#" class="civAttrib">Unique Ability</a></li>
+<li><a href="#" class="civAttrib">Unique Unit(s)</a></li>
+<li><a href="#" class="civAttrib">Unique Building(s)</a></li>
+
+</ul>
+<!-- <p><img src="http://placehold.it/320x240&text=Ad"/></p>
+ --></div>
+</div>
+ 
+<footer class="row">
+<div class="large-12 columns">
+<hr/>
+<div class="row">
+
+<div class="large-6 columns">
+
+</div>
+</div>
+</div>
+</footer>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js"></script>
+<script>
+      $(document).foundation();
+</script>
+<script src="js/functions.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+table {
+	position: relative;
+	top: 50px;
+  border-width: thin;
+}
+
+td {
+  text-align: center;
+}
+
+tbody * {
+  border-width: thin;
+  width: 300px;
+}

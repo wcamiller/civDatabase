@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Foundation 5</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/normalize.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css">
+	<link href='http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+	<style>
+	::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+		font-size:10px;
+	}
+	::-moz-placeholder { /* Firefox 19+ */
+		font-size:10px;
+	}
+	:-ms-input-placeholder { /* IE 10+ */
+		font-size:10px;
+	}
+	:-moz-placeholder { /* Firefox 18- */
+		font-size:10px;
+	}
+	#alert {
+		font-size: 13px;
+		color: #ff471a;
+	}
+	#success {
+		font-size: 13px;
+		color: #66ff66;
+	}
+	</style>
+	</head>
+	<body>
+
+		<div class="large-2 columns large-offset-3" style="top:15px;">
+			<select id="dropDown" name="dropDown"></select>
+		</div>
+		<div class="row">
+			<div class="large-3 columns" style="padding-top:20px; left:15px;">
+			</div>
+<!-- <div class="large-3 columns" style="padding-top:15px;">
+<form id="form">
+<input id="searchString" type="text" placeholder="Search">
+</form>
+</div> -->
+
+<div class="large-2 columns">
+
+	<ul class="inline-list right" style="padding-top:20px;">
+
+		<li><a href="index.html">Query Page</a></li>
+	</ul>
+</div>
+</div>
+
+
+
+<div class="large-9 push-3 columns" style="padding-top:15px;">
+
+	<div id="addCivDiv" class="large-9 columns">
+		<h3>Adding Civilization</h3>
+
+		<form id="addCivForm">
+			<fieldset>
+				<legend>Name & Ability</legend>
+				<div class="large-6 columns">
+					<input type="text" name="addCivName" placeholder="Civilization Name">
+				</div>
+				<div class="large-9 columns">
+					<div id="alert">
+					</div>
+					<div id="success">
+					</div>
+				</div>
+				<div class="large-6 columns">
+					<input type="text" name="addUniqueAbility" placeholder="Unique Ability">
+				</div>
+				<div class="large-6 columns left">
+					<input type="text" name="addLeader" placeholder="Leader Name">
+				</div>
+			</fieldset>
+			<div class="row">
+				<input class="right button radius small" id="submitAddCiv" type="button" value="Submit">
+			</div>
+		</form>
+		
+		<form id="addUnitsForm">
+			<fieldset>
+
+				<legend>Units</legend>
+				<div class="large-4 columns dropDown">
+				</div>
+				<div class="large-12 columns">
+					<input type="text" name="addUnit1" placeholder="Unique Unit 1" />
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" name="addHP1" placeholder="HP" />
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" name="addMelee1" placeholder="Melee"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" name="addDefense1" placeholder="Defense"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" name="addSight1" placeholder="Sight"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" name="addReplacesUnit1" placeholder="Replaces"  />
+				</div>
+				<div class="large-12 columns">
+					<input type="text" name="addUnit2" placeholder="Unique Unit 2"/>
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" name="addHP2" placeholder="HP" />
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" name="addMelee2" placeholder="Melee"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" name="addDefense2" placeholder="Defense"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" name="addSight2" placeholder="Sight"  />
+				</div>
+				<div class="large-2 columns left">
+					<input type="text" name="addReplacesUnit2" placeholder="Replaces"  />
+				</div>
+			</fieldset>
+			
+			<div class="row">
+				<input class="right button radius small" id="submitAddUnits" type="button" value="Submit">
+			</div>
+		</form>
+
+		<form id="addBuildingsForm">
+			<fieldset>
+				<legend>Buildings</legend>
+				<div class="large-4 columns dropDown">
+				</div>
+				<div class="large-3 columns">
+					<input type="text" name="addBuildingName1" placeholder="Unique Building 1 Name" />
+				</div>
+				<div class="large-3 columns">
+					<input type="text" name="addReplacesBuilding1" placeholder="Replaces Building 1" />
+				</div>
+				<div class="large-12 columns">
+					<input type="text" name="addBuildingDesc1" placeholder="Unique Building 1 Desc." />
+				</div>
+
+				<div class="large-3 columns">
+					<input type="text" name="addBuildingName2" placeholder="Unique Building 2 Name" />
+				</div>
+				<div class="large-3 columns">
+					<input type="text" name="addReplacesBuilding2" placeholder="Replaces Building 2" />
+				</div>
+				<div class="large-12 columns">
+					<input type="text" name="addBuildingDesc2" placeholder="Unique Building 2 Desc." />
+				</div>
+			</fieldset>
+
+			<div class="row">
+				<input class="right button radius small" id="submitAddBuildings" type="button" value="Submit">
+			</div>
+		</form>
+	</div>
+
+	<div id="editCivDiv">
+		<h3>Editing Civilization</h3>
+		<form>
+			<fieldset>
+				<legend>Edit Civ</legend>
+				<div class="large-6 columns">
+					<input type="text" placeholder="Edit Unique Ability">
+				</div>
+				<div class="large-6 columns">
+					<input type="text" placeholder="Edit Unique Unit 1" />
+				</div>
+				<div class="large-16 columns">
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" placeholder="HP" />
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" placeholder="Melee"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" placeholder="Defense"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" placeholder="Sight"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" placeholder="Replaces"  />
+				</div>
+				<div class="large-6 columns">
+					<input type="text" placeholder="Edit Unique Unit 2"/>
+				</div>
+				<div class="large-16 columns">
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" placeholder="HP" />
+				</div>
+				<div class="large-2 columns">	
+					<input type="text" placeholder="Melee"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" placeholder="Defense"  />
+				</div>
+				<div class="large-2 columns">
+					<input type="text" placeholder="Sight"  />
+				</div>
+				<div class="large-2 columns left">
+					<input type="text" placeholder="Replaces"  />
+				</div>
+				<div class="row">
+					<div class="large-4 columns">
+						<input type="text" placeholder="Edit Unique Building 1" />
+					</div>
+					<div class="large-4 columns left">
+						<input type="text" placeholder="Edit Unique Building 2" />
+					</div>
+				</div>
+			</fieldset>
+			<div class="row">
+				<input class="right button radius small" type="submit"  value="Submit">
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+
+<div class="large-3 pull-9 columns">
+	<ul class="side-nav">
+		<li><a href="#" id="editCiv" class="civAttrib">Edit Existing Civ</a></li>
+		<li><a href="#" id="addCiv" class="civAttrib">Add Civ</a></li>
+
+	</ul>
+<!-- <p><img src="http://placehold.it/320x240&text=Ad"/></p>
+--></div>
+
+<footer class="row">
+	<div class="large-12 columns">
+		<hr/>
+		<div class="row">
+
+			<div class="large-6 columns">
+
+			</div>
+		</div>
+	</div>
+</footer>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
+<script>
+$(document).foundation();
+</script>
+<script src="js/functions.js"></script>
+<script src="js/addData.js"></script>
+</body>
+</html>
