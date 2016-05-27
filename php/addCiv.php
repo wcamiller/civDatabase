@@ -12,26 +12,33 @@ if ($mysqli->connect_errno) {
 }
 
 $civName = $_POST['civName'];
-$uniqueAbility = '"' . $_POST['uniqueAbility'] . '"';
+$uniqueAbility = $_POST['uniqueAbility'];
 $civLeader = $_POST['leader'];
+$abilityType = $_POST['civAbilityType'];
 
 $rows = array();
 $json_array = array();
 
-$civAdded = "Civilization " . $civName .  " successfully added.";
+$civAdded = "Civilization " . $civName .  " successfully added / updated.";
 $abilityAdded = "Unique ability successfully added to civilization " . $civName . ".";
+$abilityTypeSet = "Unique ability type successfully added.";
+$abilityTypeAdded = "Unique ability type successfully associated.";
 $civId;
 
-if ($civName && $civLeader) {
-	$addCivQuery = "INSERT INTO civ_civs (name, leader) VALUES ($civName, $civLeader)";
+
+if ($civName) {
+
+	$addCivQuery = "INSERT INTO civ_civs (name, leader) VALUES ('$civName', '$civLeader') 
+									ON DUPLICATE KEY UPDATE civ_civs.name='$civName', civ_civs.leader='$civLeader'";
+
 	if ($mysqli->query($addCivQuery)) {
+
 		array_push($json_array, '{"success":' . '"' . $civAdded  . '"}');
 	} else {
-		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
-		return;
+		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');		
 	} 
 } else {
-	array_push($json_array, '{"error":' . '"Insufficient input data (both civilization and leader names are required)."}');
+	array_push($json_array, '{"error":' . '"Civ name required."}');
 }
 
 if ($uniqueAbility) {
@@ -41,14 +48,30 @@ if ($uniqueAbility) {
 			$civId = $civIdRow["id"];
 		}
 	}
-	$insertAbilityQuery = "FFJI";
-	// $insertAbilityQuery = "INSERT INTO civ_unique_abilities (civ_id, descrip) VALUES ($civId, $uniqueAbility)";
+	
+	$insertAbilityQuery = "INSERT INTO civ_unique_abilities (civ_id, descrip) 
+												 VALUES ($civId, '$uniqueAbility') ON DUPLICATE KEY
+												 UPDATE descrip='$uniqueAbility'";
+
 	if ($mysqli->query($insertAbilityQuery)) {
 		array_push($json_array, '{"success":' . '"' . $abilityAdded . '"}');
 	} else {
 		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
 	}
+							 
+	$insertAbilityTypeQuery = "INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
+														 ((SELECT abils.id FROM civ_unique_abilities abils WHERE
+														 abils.civ_id = $civId), (SELECT type.id FROM civ_ability_types type WHERE
+														 type.name = '$abilityType'))";
+
+	if ($mysqli->query($insertAbilityTypeQuery)) {
+			array_push($json_array, '{"success":' . '"' . $abilityTypeAdded . '"}');
+	} else {
+			array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
+	}
 }
+
+
 
  print json_encode($json_array);
 

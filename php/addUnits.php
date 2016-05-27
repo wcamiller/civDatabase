@@ -47,15 +47,18 @@ if ($civIdResult = $mysqli->query($civIdQuery)) {
 		$civId = $civIdRow["id"];
 	}
 } else {
-		//print $mysqli->error;
 		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
 }
 
 $addUnit1Query = "INSERT INTO civ_unique_units (civ_id, name, combat_strength, ranged_strength, movement, descrip, replaces)
-								  VALUES ($civId, '$unit1', $combatStrength1, $rangedStrength1, $movement1, '$descrip1', '$replacesUnit1')";
+								  VALUES ($civId, '$unit1', $combatStrength1, $rangedStrength1, $movement1, '$descrip1', '$replacesUnit1')
+								  ON DUPLICATE KEY UPDATE name='$unit1', combat_strength=$combatStrength1, ranged_strength=$rangedStrength1,
+								  movement=$movement1, descrip='$descrip1', replaces='$replacesUnit1'";
 
 $addUnit2Query = "INSERT INTO civ_unique_units (civ_id, name, combat_strength, ranged_strength, movement, descrip, replaces)
-								  VALUES ($civId, '$unit2', $combatStrength2, $rangedStrength2, $movement2, '$descrip2', '$replacesUnit2')";
+								  VALUES ($civId, '$unit2', $combatStrength2, $rangedStrength2, $movement2, '$descrip2', '$replacesUnit2')
+								  ON DUPLICATE KEY UPDATE name='$unit2', combat_strength=$combatStrength2, ranged_strength=$rangedStrength2,
+								  movement=$movement2, descrip='$descrip2', replaces='$replacesUnit2'";
 
 if ($unit1) {
 	if ($mysqli->query($addUnit1Query)) {

@@ -13,18 +13,6 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 	<style>
-	::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-		font-size:10px;
-	}
-	::-moz-placeholder { /* Firefox 19+ */
-		font-size:10px;
-	}
-	:-ms-input-placeholder { /* IE 10+ */
-		font-size:10px;
-	}
-	:-moz-placeholder { /* Firefox 18- */
-		font-size:10px;
-	}
 	.alert {
 		font-size: 13px;
 		color: #ff471a;
@@ -32,6 +20,10 @@
 	.success {
 		font-size: 13px;
 		color: #66ff66;
+	}
+
+	label {
+		color: #999999;
 	}
 	</style>
 </head>
@@ -66,7 +58,11 @@
 			<fieldset>
 				<legend>Name & Ability</legend>
 				<div class="large-6 columns">
-					<input type="text" name="civName" placeholder="Civilization Name">
+					<label>Civilization Name
+					<input type="text" name="civName">
+				</div>
+				<div style="top: 21px;" class="large-4 columns">
+					<select  id="dropDown3" name="dropDown3"></select>
 				</div>
 				<div class="large-9 columns">
 					<div id="alertCiv" class="large-12 columns alert">
@@ -75,10 +71,24 @@
 					</div>
 				</div>
 				<div class="large-6 columns">
-					<input type="text" name="uniqueAbility" placeholder="Unique Ability">
+					<label>Unique Ability
+					<input type="text" name="uniqueAbility">
 				</div>
 				<div class="large-6 columns left">
-					<input type="text" name="leader" placeholder="Leader Name">
+					<label>Leader
+					<input type="text" name="leader">
+				</div>
+				<div class="large-4 columns left">
+					<label>Ability Type
+					<select id="dropDownCivAbil" name="civAbilityType">
+						<option>Military</option>
+						<option>Science</option>
+						<option>Production</option>
+						<option>Culture</option>
+						<option>Commerce</option>
+						<option>Diplomacy</option>
+						<option>Faith</option>
+					</select>
 				</div>
 			</fieldset>
 			<div class="row">
@@ -89,7 +99,7 @@
 		<form id="addUnitsForm">
 			<fieldset>
 
-				<legend>Units</legend>
+				<legend>Unique Units 1 & 2</legend>
 				<div class="large-4 columns">
 					<select id="dropDown1" name="dropDown1"></select>
 				</div>
@@ -98,42 +108,53 @@
 				<div id="successUnit" class="large-12 columns success">
 				</div>
 				<div class="large-12 columns">
-					<input type="text" name="unit1" placeholder="Unique Unit 1" />
+					<label>Unit Name
+					<input type="text" name="unit1" />
+				</div>
+				<div class="large-3 columns">
+					<label>Combat Strength
+					<input type="text" name="combatStrength1" />
+				</div>
+				<div class="large-3 columns">
+					<label>Ranged Strength
+					<input type="text" name="rangedStrength1" />
+				</div>
+				<div class="large-3 columns">
+					<label>Movement
+					<input type="text" name="movement1" />
+				</div>
+				<div class="large-3 columns">
+					<label>Replaces Unit
+					<input type="text" name="replacesUnit1" />
+				</div>
+				<div class="large-12 columns">
+					<label>Description
+					<input type="text" name="descrip1" />
 				</div>
 
-				<div class="large-2 columns">
-					<input type="text" name="combatStrength1" placeholder="Combat Stength 1"  />
+				<div class="large-12 columns">
+					<label>Unit Name
+					<input type="text" name="unit2" />
 				</div>
-				<div class="large-2 columns">
-					<input type="text" name="rangedStrength1" placeholder="Ranged Strength 1"  />
+				<div class="large-3 columns">
+					<label>Combat Strength
+					<input type="text" name="combatStrength2" />
 				</div>
-				<div class="large-2 columns">
-					<input type="text" name="movement1" placeholder="Movement 1"  />
+				<div class="large-3 columns">
+					<label>Ranged Strength
+					<input type="text" name="rangedStrength2" />
 				</div>
-				<div class="large-2 columns">
-					<input type="text" name="replacesUnit1" placeholder="Replaces 1"  />
+				<div class="large-3 columns">
+					<label>Movement
+					<input type="text" name="movement2" />
+				</div>
+				<div class="large-3 columns left">
+					<label>Replaces Unit
+					<input type="text" name="replacesUnit2" />
 				</div>
 				<div class="large-12 columns">
-					<input type="text" name="descrip1" placeholder="Unique Description 1"/>
-				</div>
-
-				<div class="large-12 columns">
-					<input type="text" name="unit2" placeholder="Unique Unit 2"/>
-				</div>
-				<div class="large-2 columns">
-					<input type="text" name="combatStrength2" placeholder="Combat Strength 2"  />
-				</div>
-				<div class="large-2 columns">
-					<input type="text" name="rangedStrength2" placeholder="Ranged Strength 2"  />
-				</div>
-				<div class="large-2 columns">
-					<input type="text" name="movement2" placeholder="Movement 2"  />
-				</div>
-				<div class="large-2 columns left">
-					<input type="text" name="replacesUnit2" placeholder="Replaces 2"  />
-				</div>
-				<div class="large-12 columns">
-					<input type="text" name="descrip2" placeholder="Unique Description 2"/>
+					<label>Description
+					<input type="text" name="descrip2" />
 				</div>
 			</fieldset>
 			
@@ -144,7 +165,7 @@
 
 		<form id="addBuildingsForm">
 			<fieldset>
-				<legend>Buildings</legend>
+				<legend>Unique Building</legend>
 				<div class="large-4 columns">
 					<select id="dropDown2" name="dropDown2"></select>
 				</div>
@@ -153,26 +174,52 @@
 				<div id="successBuilding" class="large-12 columns success">
 				</div>
 				<div class="large-3 columns">
-					<input type="text" name="buildingName1" placeholder="Unique Building 1 Name" />
-				</div>
-
-				<div class="large-3 columns">
-					<input type="text" name="replacesBuilding1" placeholder="Replaces Building 1" />
-				</div>
-				<div class="large-12 columns">
-					<input type="text" name="buildingDesc1" placeholder="Unique Building 1 Desc." />
-				</div>
-
-				<div class="large-3 columns">
-					<input type="text" name="buildingName2" placeholder="Unique Building 2 Name" />
+					<label>Building Name
+					<input type="text" name="buildingName1"  />
 				</div>
 				<div class="large-3 columns">
-					<input type="text" name="replacesBuilding2" placeholder="Replaces Building 2" />
+					<label>Replaces Building
+					<input type="text" name="replacesBuilding1" />
 				</div>
+				<div class="large-8 columns">
+					<label>Unique Ability
+					<input type="text" name="buildingAbility1"  />
+				</div>
+				<div class="large-4 columns left">
+					<label>Ability Type
+					<select id="dropDownCivAbil" name="civAbilityType1">
+						<option>Military</option>
+						<option>Science</option>
+						<option>Production</option>
+						<option>Culture</option>
+						<option>Commerce</option>
+						<option>Diplomacy</option>
+						<option>Faith</option>
+					</select>
+				</div>
+				<!-- <div class="large-3 columns">
+					<label>Building Name
 
-				<div class="large-12 columns">
-					<input type="text" name="buildingDesc2" placeholder="Unique Building 2 Desc." />
+					<input type="text" name="buildingName2" />
 				</div>
+				<div class="large-3 columns">
+				<label>Replaces Building
+					<input type="text" name="replacesBuilding2"  />
+				</div>
+				<div class="large-8 columns">
+				<label>Unique Ability
+					<input type="text" name="buildingAbility2"  />
+				</div>
+					<div class="large-4 columns left">
+					<label>Ability Type
+					<select id="dropDownCivAbil" name="civAbilityType2">
+						<option>Military</option>
+						<option>Science</option>
+						<option>Production</option>
+						<option>Culture</option>
+						<option>Commerce</option>
+					</select>
+				</div> -->
 			</fieldset>
 
 			<div class="row">
@@ -191,8 +238,15 @@
 	<ul class="side-nav">
 
 	</ul>
-<!-- <p><img src="http://placehold.it/320x240&text=Ad"/></p>
---></div>
+<div class="large-14 columns right">
+<br><br><br>
+<ul>
+<li style="font-size: 12px; color: #999999">Select a civilization and edit the values displayed
+<li style="font-size: 12px; color: #999999">Select "Add New Civilization" to add a new civilization
+<li style="font-size: 12px; color: #999999">Submit to save
+</ul>
+</div>
+</div>
 
 <footer class="row">
 	<div class="large-12 columns">
@@ -200,7 +254,6 @@
 		<div class="row">
 
 			<div class="large-6 columns">
-
 			</div>
 		</div>
 	</div>
