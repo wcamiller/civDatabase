@@ -42,6 +42,7 @@ $("#dropDown1").change(function() {
 
 $("#dropDown2").change(function() {
 	populateBuildingFields();
+
 });
 
 $("#dropDown3").change(function() {

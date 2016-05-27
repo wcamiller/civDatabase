@@ -14,7 +14,8 @@ if ($mysqli->connect_errno) {
 $civName = $_POST['civName'];
 $uniqueAbility = $_POST['uniqueAbility'];
 $civLeader = $_POST['leader'];
-$abilityType = $_POST['civAbilityType'];
+$abilityType1 = $_POST['civAbilityType1'];
+$abilityType2 = $_POST['civAbilityType2'];
 
 $rows = array();
 $json_array = array();
@@ -26,10 +27,11 @@ $abilityTypeAdded = "Unique ability type successfully associated.";
 $civId;
 
 
+
 if ($civName) {
 
 	$addCivQuery = "INSERT INTO civ_civs (name, leader) VALUES ('$civName', '$civLeader') 
-									ON DUPLICATE KEY UPDATE civ_civs.name='$civName', civ_civs.leader='$civLeader'";
+									ON DUPLICATE KEY UPDATE name='$civName', leader='$civLeader'";
 
 	if ($mysqli->query($addCivQuery)) {
 
@@ -53,25 +55,42 @@ if ($uniqueAbility) {
 												 VALUES ($civId, '$uniqueAbility') ON DUPLICATE KEY
 												 UPDATE descrip='$uniqueAbility'";
 
-	if ($mysqli->query($insertAbilityQuery)) {
+	if ($insertAbilitySuccess = $mysqli->query($insertAbilityQuery)) {
 		array_push($json_array, '{"success":' . '"' . $abilityAdded . '"}');
 	} else {
 		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
 	}
 							 
-	$insertAbilityTypeQuery = "INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
+	$insertAbilityTypeQuery1 = "INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
 														 ((SELECT abils.id FROM civ_unique_abilities abils WHERE
 														 abils.civ_id = $civId), (SELECT type.id FROM civ_ability_types type WHERE
-														 type.name = '$abilityType'))";
+														 type.name = '$abilityType1')) ON DUPLICATE KEY UPDATE type_id=
+														 (SELECT type.id FROM civ_ability_types type WHERE type.name = '$abilityType1')";
 
-	if ($mysqli->query($insertAbilityTypeQuery)) {
+	$insertAbilityTypeQuery2 = "INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
+															 ((SELECT abils.id FROM civ_unique_abilities abils WHERE
+															 abils.civ_id = $civId), (SELECT type.id FROM civ_ability_types type WHERE
+															 type.name = '$abilityType2')) ON DUPLICATE KEY UPDATE type_id=
+															 (SELECT type.id FROM civ_ability_types type WHERE type.name = '$abilityType2')";
+
+
+if ($insertAbilitySuccess) {
+	if ($mysqli->query($insertAbilityTypeQuery1)) {
 			array_push($json_array, '{"success":' . '"' . $abilityTypeAdded . '"}');
 	} else {
 			array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
 	}
 }
 
+if ($insertAbilitySuccess && $abilityType2) {
+		if ($mysqli->query($insertAbilityTypeQuery2)) {
+				array_push($json_array, '{"success":' . '"' . $abilityTypeAdded . '"}');
+		} else {
+				array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
+		}
+}
 
+}
 
  print json_encode($json_array);
 
