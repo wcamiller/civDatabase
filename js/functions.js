@@ -10,6 +10,15 @@ function addDataSubmitListeners() {
 			});
 			return;
 		}
+		if (!$("[name='dropDownCivAbil1'").val()) {
+			$("#alertCiv").text("Civilization must have one ability type.")
+			$("#alertCiv").show();
+			$("#alertCiv").fadeOut(25000, function () {
+				$(".deleteMe").remove();
+			});
+			return;
+		}
+
 		$.post("php/addCiv.php", data, function(event) {		
 			event = JSON.parse(event);
 			$.each(event, function (index, value) {  
@@ -77,7 +86,14 @@ function addDataSubmitListeners() {
 			});
 			return;
 		}
-
+		if (!$("[name='dropDownCivAbil3'").val()) {
+			$("#alertBuilding").text("Building must have one ability type.")
+			$("#alertBuilding").show();
+			$("#alertBuilding").fadeOut(25000, function () {
+				$(".deleteMe").remove();
+			});
+			return;
+		}
 		$.post("php/addBuildings.php", data, function(event) {		
 			event = JSON.parse(event);
 			$.each(event, function (index, value) {  
@@ -111,13 +127,19 @@ function populateCivsFields() {
 			console.log(data);
 			$("[name=civName").val(data[0][0].name);
 			$("[name=leader").val(data[0][0].leader);
-			if (data[1].length > 1) {
-				$("[name=uniqueAbility").val(data[1][0].descrip);
-				$("[name=civAbilityType1").val(data[1][0].name);
-				$("[name=civAbilityType2").val(data[1][1].name);
+			if (data[1].length) {
+				if (data[1].length > 1) {
+					$("[name=uniqueAbility").val(data[1][0].descrip);
+					$("[name=civAbilityType1").val(data[1][0].name);
+					$("[name=civAbilityType2").val(data[1][1].name);
+				} else {
+					$("[name=uniqueAbility").val(data[1][0].descrip);
+					$("[name=civAbilityType1").val(data[1][0].name);
+					$("[name=civAbilityType2").val("");
+				}
 			} else {
-				$("[name=uniqueAbility").val(data[1][0].descrip);
-				$("[name=civAbilityType1").val(data[1][0].name);
+				$("[name=uniqueAbility").val("");
+				$("[name=civAbilityType1").val("");
 				$("[name=civAbilityType2").val("");
 			}
 		} else {
@@ -202,6 +224,7 @@ function populateUnitFields() {
 }
 
 function updateTable(jsonArray) {
+	$("#queryInfo").show();
 	var queryInfoDiv = document.getElementById("queryInfo");
 	
 	while (queryInfoDiv.firstChild) {
@@ -234,6 +257,7 @@ function updateTable(jsonArray) {
 		$(link).click(function(linkText) {
 			return function() {
 				civInfo(linkText.data);
+				$("#queryInfo").hide();
 			}
 		}(linkText));
 	}
@@ -255,24 +279,34 @@ function civInfo(civName) {
 		if (data[1].length) {
 			$("#basicInfo").append("<p><strong>Unique Ability:</strong></p><p> " + data[1][0].descrip + "</p><br>");
 		}
+		if (data[4].length) {
+			$("#basicInfo").append("<p><strong>Ability Types:</strong></p>");
+			$(data[4]).each(function(index, value) {
+				$("#basicInfo").append("<p> " + value.name + "</p><br>");
+			});
+		}
 		if (data[3].length) {
-
-			$("#basicInfo").append("<p><strong>Unique Units:</strong></p><table id='unitTable' width=750><tr><th>Name</th><th>Combat Strength</th><th>Ranged Strength</th><th>Movement</th><th>Replaces</th><th>Description<th></tr></table><br>");
-			$.each(data[3], function (index, value) {
+			$("#basicInfo").append("<p><strong>Unique Units:</strong></p><table id='unitTable' width=750><tr><th>Name</th><th>Combat Strength</th><th>Ranged Strength</th><th>Movement</th><th>Replaces</th><th>Description</th></tr></table><br>");
+			$.each(data[3], function(index, value) {
 				$("#unitTable").append("<tr><td>" + value.name + "</td><td>" + value.combat_strength + "</td><td>" + value.ranged_strength +
 					"</td><td>" + value.movement + "</td><td>" + value.replaces + "</td><td>" + value.descrip + "</td></tr>");
 				});
 		}
 		if (data[2].length) {
 
-			$("#basicInfo").append("<p><strong>Unique Buildings:</strong></p><table id='buildingTable' width=750><tr><th>Name</th><th>Replaces</th><th>Description</th></tr></table>");
-			$.each(data[2], function (index, value) {
-				$("#buildingTable").append("<tr><td>" + value.name + "</td><td>" + value.replaces + "</td><td>" + value.descrip + "</td></tr>");
+			$("#basicInfo").append("<p><strong>Unique Buildings:</strong></p><table id='buildingTable' width=750><tr id='headerRowBuildings'><th>Name</th><th>Replaces</th><th>Unique Ability</th></tr></table>");
+			$.each(data[2], function(index, value) {
+				$("#buildingTable").append("<tr id='infoBuildings'><td>" + value.name + "</td><td>" + value.replaces + "</td><td>" + value.descrip + "</td></tr>");
+				$.each(data[5], function(index, value) {
+					$("#headerRowBuildings").append("<th width=100>Ability Type</th>");
+					$("#infoBuildings").append("<td>" + value.name + "</td>");
 				});
+			});
 		}
 	});
 }
 
+//
 
 
 

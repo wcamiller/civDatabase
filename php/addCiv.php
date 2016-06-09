@@ -30,8 +30,8 @@ $civId;
 
 if ($civName) {
 
-	$addCivQuery = "INSERT INTO civ_civs (name, leader) VALUES ('$civName', '$civLeader') 
-									ON DUPLICATE KEY UPDATE name='$civName', leader='$civLeader'";
+	$addCivQuery = sprintf("INSERT INTO civ_civs (name, leader) VALUES ('%s', '%s') 
+									ON DUPLICATE KEY UPDATE name='%s', leader='%s'", $civName, $civLeader, $civName, $civLeader);
 
 	if ($mysqli->query($addCivQuery)) {
 
@@ -44,16 +44,16 @@ if ($civName) {
 }
 
 if ($uniqueAbility) {
-	$civIdQuery = "SELECT id FROM civ_civs WHERE civ_civs.name LIKE '%$civName%'";
+	$civIdQuery = sprintf("SELECT id FROM civ_civs WHERE civ_civs.name='%s'", $civName);
 	if ($civIdResult = $mysqli->query($civIdQuery)) {
 		if ($civIdRow = $civIdResult->fetch_assoc()) {
 			$civId = $civIdRow["id"];
 		}
 	}
 	
-	$insertAbilityQuery = "INSERT INTO civ_unique_abilities (civ_id, descrip) 
-												 VALUES ($civId, '$uniqueAbility') ON DUPLICATE KEY
-												 UPDATE descrip='$uniqueAbility'";
+	$insertAbilityQuery = sprintf("INSERT INTO civ_unique_abilities (civ_id, descrip) 
+												 VALUES (%d, '%s') ON DUPLICATE KEY
+												 UPDATE descrip='%s'", $civId, $uniqueAbility, $uniqueAbility);
 
 	if ($insertAbilitySuccess = $mysqli->query($insertAbilityQuery)) {
 		array_push($json_array, '{"success":' . '"' . $abilityAdded . '"}');
@@ -61,17 +61,17 @@ if ($uniqueAbility) {
 		array_push($json_array, '{"error":' . '"' . $mysqli->error . '"}');
 	}
 							 
-	$insertAbilityTypeQuery1 = "INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
+	$insertAbilityTypeQuery1 = sprintf("INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
 														 ((SELECT abils.id FROM civ_unique_abilities abils WHERE
-														 abils.civ_id = $civId), (SELECT type.id FROM civ_ability_types type WHERE
-														 type.name = '$abilityType1')) ON DUPLICATE KEY UPDATE type_id=
-														 (SELECT type.id FROM civ_ability_types type WHERE type.name = '$abilityType1')";
+														 abils.civ_id = %d), (SELECT type.id FROM civ_ability_types type WHERE
+														 type.name = '%s')) ON DUPLICATE KEY UPDATE type_id=
+														 (SELECT type.id FROM civ_ability_types type WHERE type.name = '%s')", $civId, $abilityType1, $abilityType1);
 
-	$insertAbilityTypeQuery2 = "INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
+	$insertAbilityTypeQuery2 = sprintf("INSERT INTO civ_abil_to_type (ability_id, type_id) VALUES
 															 ((SELECT abils.id FROM civ_unique_abilities abils WHERE
-															 abils.civ_id = $civId), (SELECT type.id FROM civ_ability_types type WHERE
-															 type.name = '$abilityType2')) ON DUPLICATE KEY UPDATE type_id=
-															 (SELECT type.id FROM civ_ability_types type WHERE type.name = '$abilityType2')";
+															 abils.civ_id = %d), (SELECT type.id FROM civ_ability_types type WHERE
+															 type.name = '%s')) ON DUPLICATE KEY UPDATE type_id=
+															 (SELECT type.id FROM civ_ability_types type WHERE type.name = '%s')", $civId, $abilityType2, $abilityType2);
 
 
 if ($insertAbilitySuccess) {

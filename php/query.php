@@ -13,9 +13,11 @@ if ($mysqli->connect_errno) {
 
 $searchString = $_GET['query'];
 
+
 $rows = array();
 
-$query = "SELECT * FROM civ_civs WHERE civ_civs.name LIKE '%$searchString%' ORDER BY name";
+$query = sprintf("SELECT * FROM civ_civs WHERE civ_civs.name LIKE '%%%s%%' ORDER BY name", $searchString);
+
 
 if ($result = $mysqli->query($query)) {
 	while($row = $result->fetch_assoc()) {
